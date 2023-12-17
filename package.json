@@ -54,16 +54,11 @@
   "engines": {
     "node": "18.x"
   },
+  "main": "src/index.ts",
   "scripts": {
     "start": "nodemon",
-    "build": "rimraf dist && tsc",
-    "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add dist",
-    "typeorm": "typeorm-ts-node-commonjs"
-  },
-  "pre-commit": [
-    "ts.check",
-    "build",
-    "add-build"
-  ]
+    "build": "tsc",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "vercel-build": "echo hello"
+  }
 }
