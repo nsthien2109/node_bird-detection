@@ -13,7 +13,6 @@ import { AppDataSource } from "./data-source";
 import { Routes } from "./routes";
 import { RouteType } from "./types/route.type";
 import { noneMiddleware } from "./shared/middlewares/none.middleware";
-import configPublic from "./config/config";
 
 import * as cloudinary from "cloudinary";
 
@@ -34,7 +33,6 @@ AppDataSource.initialize()
     app.use(cookieParser());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
-    configPublic(app);
 
     const endpoints = [...Routes.map((route) => `${route.method} ========> /api${route.route}`)];
 
