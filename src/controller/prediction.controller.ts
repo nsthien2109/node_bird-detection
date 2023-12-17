@@ -13,15 +13,6 @@ export class PredictionController {
   private predictionService = new PredictionService();
   private historyService = new HistoryService();
 
-  async fillData(request: Request, response: Response) {
-    try {
-      const result = await this.predictionService.fillData();
-      return response.send("Completed");
-    } catch (error) {
-      return response.status(500).json({ error: error });
-    }
-  }
-
   async uploadImageToCloud(file: Express.Multer.File) {
     const b64 = Buffer.from(file.buffer).toString("base64");
     let dataURI = "data:" + file.mimetype + ";base64," + b64;
