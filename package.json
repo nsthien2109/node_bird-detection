@@ -56,12 +56,10 @@
   },
   "scripts": {
     "start": "nodemon",
-    "build": "rimraf build && tsc",
     "ts.check": "tsc --project tsconfig.json",
     "typeorm": "typeorm-ts-node-commonjs"
   },
   "pre-commit": [
-    "ts.check",
-    "build"
+    "ts.check"
   ]
 }
