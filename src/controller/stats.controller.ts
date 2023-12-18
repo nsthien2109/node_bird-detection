@@ -1,7 +1,7 @@
-import {UserService} from "../services/user.service";
-import {HistoryService} from "../services/history.service";
-import {BirdService} from "../services/bird.service";
-import {Request, Response} from "express";
+import { UserService } from '../services/user.service';
+import { HistoryService } from '../services/history.service';
+import { BirdService } from '../services/bird.service';
+import { Request, Response } from 'express';
 
 export class StatsController {
   private userService = new UserService();
@@ -20,7 +20,7 @@ export class StatsController {
         histories: history_count,
       };
 
-      return response.status(200).json({  ...data });
+      return response.status(200).json({ ...data });
     } catch (error) {
       return response.status(500).json({ error: error });
     }
