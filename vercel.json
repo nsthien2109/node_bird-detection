@@ -5,18 +5,18 @@
       "src": "dist/index.js",
       "use": "@vercel/node",
       "config": {
-        "command": "npm run start"
+        "command": "node run dist/index.js"
       }
     }
   ],
   "routes": [
     {
-      "src": "/api(.*)",
-      "dest": "dist/index.js"
+      "src": "/api/(.*)",
+      "dest": "./dist/index.js"
     },
     {
       "src": "/(.*)",
-      "dest": "dist/index.js"
+      "dest": "./dist/index.js"
     }
   ]
 }
