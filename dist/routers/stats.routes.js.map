@@ -1,1 +1,0 @@
-{"version":3,"file":"stats.routes.js","sourceRoot":"","sources":["../../src/routers/stats.routes.ts"],"names":[],"mappings":";;;AACA,mEAAiE;AACjE,yEAAoE;AAEvD,QAAA,WAAW,GAAgB;IACtC;QACE,MAAM,EAAE,KAAK;QACb,KAAK,EAAE,QAAQ;QACf,UAAU,EAAE,kCAAe;QAC3B,MAAM,EAAE,UAAU;QAClB,UAAU,EAAE,CAAC,6BAAW,CAAC;KAC1B;CACF,CAAC"}

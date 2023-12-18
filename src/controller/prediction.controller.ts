@@ -1,6 +1,6 @@
 import { PredictionService } from "../services/prediction.service";
 import { Request, Response } from "express";
-import { History, User, Prediction, Bird } from "../entity";
+import { History, User, Prediction } from "../entity";
 import * as cloudinary from "cloudinary";
 import * as multer from "multer";
 
@@ -43,28 +43,40 @@ export class PredictionController {
 
     singleUpload(request, response, async (error) => {
       if (!request.file || request.files) {
-        return response.status(412).json({ status: "ERR", msg: "Please choose your image" });
+        return response
+          .status(412)
+          .json({ status: "ERR", msg: "Please choose your image" });
       }
-      if (error instanceof multer.MulterError && error.code === "LIMIT_UNEXPECTED_FILE") {
-        return response.status(400).json({ status: "ERR", msg: `Maximum of 1 image allowed` });
+      if (
+        error instanceof multer.MulterError &&
+        error.code === "LIMIT_UNEXPECTED_FILE"
+      ) {
+        return response
+          .status(400)
+          .json({ status: "ERR", msg: `Maximum of 1 image allowed` });
       } else if (error instanceof multer.MulterError) {
         return response.status(400).json({ status: "ERR", msg: error });
       }
-      const check = await this.uploadImageToCloud(request.file);
       try {
-        const result = await this.predictionService.prediction(check.url);
+        const result = await this.predictionService.prediction(request.file);
         console.log(user);
 
-        if (user && result.length === 5) {
-          console.log("OK");
-
-          const history = await this.saveToHistory(check.url, user);
-          for (const item of result) {
-            await this.saveToPrediction(item.confidence, history.id, item.id);
-          }
+        if (user && result.length > 0) {
+          this.uploadImageToCloud(request.file)
+            .then((check) => this.saveToHistory(check.url, user))
+            .then((history) => {
+              for (const item of result) {
+                this.saveToPrediction(item.confidence, history.id, item.id);
+              }
+            })
+            .catch((error) => {
+              console.error("Error saving to history:", error);
+            });
         }
         return response.status(200).json(result);
       } catch (error) {
+        console.log(error);
+
         return response.status(500).json({ error: error });
       }
     });

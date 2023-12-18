@@ -1,25 +1,24 @@
-import * as express from 'express';
-import { Request, Response } from 'express';
-import * as bodyParser from 'body-parser';
-import * as cookieParser from 'cookie-parser';
-import * as compression from 'compression';
-import * as cors from 'cors';
-import * as swaggerUi from 'swagger-ui-express';
+import * as express from "express";
+import { Request, Response } from "express";
+import * as bodyParser from "body-parser";
+import * as cookieParser from "cookie-parser";
+import * as compression from "compression";
+import * as cors from "cors";
 
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
 dotenv.config();
 
-import { AppDataSource } from './data-source';
-import { Routes } from './routes';
-import { RouteType } from './types/route.type';
-import { noneMiddleware } from './shared/middlewares/none.middleware';
+import { AppDataSource } from "./data-source";
+import { Routes } from "./routes";
+import { RouteType } from "./types/route.type";
+import { noneMiddleware } from "./shared/middlewares/none.middleware";
 
-import * as cloudinary from 'cloudinary';
+import * as cloudinary from "cloudinary";
 
 cloudinary.v2.config({
-  cloud_name: 'dmzvudfg5',
-  api_key: '614921592645376',
-  api_secret: 'L98LhofuulpSFiErE_pB0G8in_g',
+  cloud_name: "dmzvudfg5",
+  api_key: "614921592645376",
+  api_secret: "L98LhofuulpSFiErE_pB0G8in_g",
   secure: true,
 });
 
@@ -41,8 +40,8 @@ AppDataSource.initialize()
     console.log(endpoints);
 
     // register express routes from defined application routes
-    app.get('/', (request, response) => {
-      return response.send('Welcome to Njha');
+    app.get("/", (request, response) => {
+      return response.send("Welcome to Njha");
     });
 
     Routes.forEach((route: RouteType) => {
@@ -68,7 +67,7 @@ AppDataSource.initialize()
 
     // start express server
     app.listen(8080, () => {
-      console.log('Express server has started on port : 8080');
+      console.log("Express server has started on port : 8080");
     });
   })
   .catch((error) => console.log(error));

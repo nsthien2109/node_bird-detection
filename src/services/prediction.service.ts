@@ -1,13 +1,10 @@
 import { AppDataSource } from "../data-source";
 
 import { Bird, History, Prediction } from "../entity";
-import { PredictionResult } from "../types/prediction.type";
-
-import * as fs from "fs";
-import * as csv from "csv-parser";
 
 import axios from "axios";
 import * as cloudinary from "cloudinary";
+import FormData = require("form-data");
 
 export class PredictionService {
   constructor(
@@ -30,11 +27,22 @@ export class PredictionService {
     return await this.predictionRepository.delete(id);
   }
 
-  async prediction(url: string) {
+  async prediction(imageFile: Express.Multer.File) {
+    const formData = new FormData();
+    formData.append("file", imageFile.buffer, {
+      filename: imageFile.originalname,
+    });
     return await axios
-      .post(process.env.FLASK_API_PREDICTION, {
-        url,
-      })
+      .post(
+        process.env.FLASK_API_PREDICTION,
+
+        formData,
+        {
+          headers: {
+            ...formData.getHeaders(),
+          },
+        }
+      )
       .then(async (result) => {
         const predict = result.data;
         let top5Birds = [];
