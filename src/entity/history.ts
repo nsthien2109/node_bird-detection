@@ -4,14 +4,13 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import { IsDate, IsNumber, IsString } from "class-validator";
-import { User } from "./user";
-import { Prediction } from "./prediction";
+} from 'typeorm';
+import { IsDate, IsString } from 'class-validator';
+import { User } from './user';
+import { Prediction } from './prediction';
 
-@Entity("histories")
+@Entity('histories')
 export class History {
   @PrimaryGeneratedColumn()
   id: number;
