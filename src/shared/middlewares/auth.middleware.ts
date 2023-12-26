@@ -5,11 +5,7 @@ import * as jwt from "jsonwebtoken";
 
 const tokenBlacklist = new Set();
 
-export const validateRegisterData = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const validateRegisterData = async (req: Request, res: Response, next: NextFunction) => {
   const { email, username, password, isActive, verifyBy, role } = req.body;
 
   try {
@@ -27,11 +23,7 @@ export const validateRegisterData = async (
   }
 };
 
-export const validateLoginData = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const validateLoginData = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
 
   try {
@@ -46,11 +38,7 @@ export const validateLoginData = async (
   }
 };
 
-export const verifyToken = async (
-  request: Request,
-  response: Response,
-  next: NextFunction
-) => {
+export const verifyToken = async (request: Request, response: Response, next: NextFunction) => {
   const token = request.header("Authorization")?.substring(7);
 
   if (!token) {
@@ -63,9 +51,7 @@ export const verifyToken = async (
       if (error.name === "TokenExpiredError") {
         return response.status(401).json({ message: "Token has expired." });
       } else {
-        return response
-          .status(403)
-          .json({ message: "Access denied. Invalid token." });
+        return response.status(403).json({ message: "Access denied. Invalid token." });
       }
     }
     request["user"] = decoded;
@@ -73,11 +59,7 @@ export const verifyToken = async (
   });
 };
 
-export const verifyAdmin = (
-  request: Request,
-  response: Response,
-  next: NextFunction
-) => {
+export const verifyAdmin = (request: Request, response: Response, next: NextFunction) => {
   const token = request.header("Authorization")?.substring(7);
 
   if (!token) {
@@ -89,9 +71,7 @@ export const verifyAdmin = (
       if (error.name === "TokenExpiredError") {
         return response.status(401).json({ message: "Token has expired." });
       } else {
-        return response
-          .status(403)
-          .json({ message: "Access denied. Invalid token." });
+        return response.status(403).json({ message: "Access denied. Invalid token." });
       }
     }
     if (decoded["role"] === 1) {

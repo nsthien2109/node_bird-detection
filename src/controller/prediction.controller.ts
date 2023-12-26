@@ -43,17 +43,10 @@ export class PredictionController {
 
     singleUpload(request, response, async (error) => {
       if (!request.file || request.files) {
-        return response
-          .status(412)
-          .json({ status: "ERR", msg: "Please choose your image" });
+        return response.status(412).json({ status: "ERR", msg: "Please choose your image" });
       }
-      if (
-        error instanceof multer.MulterError &&
-        error.code === "LIMIT_UNEXPECTED_FILE"
-      ) {
-        return response
-          .status(400)
-          .json({ status: "ERR", msg: `Maximum of 1 image allowed` });
+      if (error instanceof multer.MulterError && error.code === "LIMIT_UNEXPECTED_FILE") {
+        return response.status(400).json({ status: "ERR", msg: `Maximum of 1 image allowed` });
       } else if (error instanceof multer.MulterError) {
         return response.status(400).json({ status: "ERR", msg: error });
       }
@@ -62,7 +55,7 @@ export class PredictionController {
         console.log(user);
 
         if (user && result.length > 0) {
-          this.uploadImageToCloud(request.file)
+          await this.uploadImageToCloud(request.file)
             .then((check) => this.saveToHistory(check.url, user))
             .then((history) => {
               for (const item of result) {
