@@ -33,9 +33,7 @@ AppDataSource.initialize()
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
 
-    const endpoints = [
-      ...Routes.map((route) => `${route.method} ========> /api${route.route}`),
-    ];
+    const endpoints = [...Routes.map((route) => `${route.method} ========> /api${route.route}`)];
 
     console.log(endpoints);
 
@@ -49,15 +47,9 @@ AppDataSource.initialize()
         `/api${route.route}`,
         route.middleware?.length > 0 ? [...route.middleware] : noneMiddleware,
         (req: Request, res: Response, next: Function) => {
-          const result = new (route.controller as any)()[route.action](
-            req,
-            res,
-            next
-          );
+          const result = new (route.controller as any)()[route.action](req, res, next);
           if (result instanceof Promise) {
-            result.then((result) =>
-              result !== null && result !== undefined ? result : undefined
-            );
+            result.then((result) => (result !== null && result !== undefined ? result : undefined));
           } else if (result !== null && result !== undefined) {
             result;
           }
@@ -66,8 +58,8 @@ AppDataSource.initialize()
     });
 
     // start express server
-    app.listen(8080, () => {
-      console.log("Express server has started on port : 8080");
+    app.listen(5000, () => {
+      console.log("Express server has started on port : 5000");
     });
   })
   .catch((error) => console.log(error));
