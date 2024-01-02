@@ -16,8 +16,5 @@ COPY . .
 # Build TypeScript code
 RUN npm run build
 
-# Expose the port that your app will run on
-EXPOSE 8080
-
 # Command to run your application
 CMD ["npm", "start"]
