@@ -2,12 +2,10 @@
 FROM node:18
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
-
-RUN rm -rf node_modules
 
 # Install app dependencies
 RUN npm install
@@ -19,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Expose the port that your app will run on
-EXPOSE 3000
+EXPOSE 8080
 
 # Command to run your application
 CMD ["npm", "start"]
