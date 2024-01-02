@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from "express";
-import { validateOrReject } from "class-validator";
-import { LoginDTO, RegisterDTO } from "../../dto/auth.dto";
-import * as jwt from "jsonwebtoken";
+import { NextFunction, Request, Response } from 'express';
+import { validateOrReject } from 'class-validator';
+import { LoginDTO, RegisterDTO } from '../../dto/auth.dto';
+import * as jwt from 'jsonwebtoken';
 
 const tokenBlacklist = new Set();
 
@@ -51,24 +51,24 @@ export const verifyToken = async (
   response: Response,
   next: NextFunction
 ) => {
-  const token = request.header("Authorization")?.substring(7);
+  const token = request.header('Authorization')?.substring(7);
 
   if (!token) {
-    return response.status(401).json({ error: "You are not authorized !" });
+    return response.status(401).json({ error: 'You are not authorized !' });
   }
 
   // Verify and decode the token
-  jwt.verify(token, process.env.SECRET_KEY, (error, decoded) => {
+  jwt.verify(token, process.env.SECRET_KEY, async (error, decoded) => {
     if (error) {
-      if (error.name === "TokenExpiredError") {
-        return response.status(401).json({ message: "Token has expired." });
+      if (error.name === 'TokenExpiredError') {
+        return response.status(401).json({ message: 'Token has expired.' });
       } else {
         return response
           .status(403)
-          .json({ message: "Access denied. Invalid token." });
+          .json({ message: 'Access denied. Invalid token.' });
       }
     }
-    request["user"] = decoded;
+    request['user'] = decoded;
     next();
   });
 };
@@ -78,27 +78,27 @@ export const verifyAdmin = (
   response: Response,
   next: NextFunction
 ) => {
-  const token = request.header("Authorization")?.substring(7);
+  const token = request.header('Authorization')?.substring(7);
 
   if (!token) {
-    return response.status(401).json({ error: "You are not authorized !" });
+    return response.status(401).json({ error: 'You are not authorized !' });
   }
 
   jwt.verify(token, process.env.SECRET_KEY, (error, decoded) => {
     if (error) {
-      if (error.name === "TokenExpiredError") {
-        return response.status(401).json({ message: "Token has expired." });
+      if (error.name === 'TokenExpiredError') {
+        return response.status(401).json({ message: 'Token has expired.' });
       } else {
         return response
           .status(403)
-          .json({ message: "Access denied. Invalid token." });
+          .json({ message: 'Access denied. Invalid token.' });
       }
     }
-    if (decoded["role"] === 1) {
-      request["user"] = decoded;
+    if (decoded['role'] === 1) {
+      request['user'] = decoded;
       next();
     } else {
-      return response.status(403).json({ message: "Permission denied." });
+      return response.status(403).json({ message: 'Permission denied.' });
     }
   });
 };
