@@ -11,6 +11,12 @@ export const BirdStatusRoute: RouteType[] = [
   },
   {
     method: "get",
+    route: "/status/:id",
+    controller: BirdStatusController,
+    action: "findOne",
+  },
+  {
+    method: "get",
     route: "/status/fill",
     controller: BirdStatusController,
     action: "fillData",

@@ -11,6 +11,12 @@ export const BirdOrderRoute: RouteType[] = [
   },
   {
     method: "get",
+    route: "/orders/:id",
+    controller: BirdOrderController,
+    action: "findOne",
+  },
+  {
+    method: "get",
     route: "/orders/fill",
     controller: BirdOrderController,
     action: "fillData",

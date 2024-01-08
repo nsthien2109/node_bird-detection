@@ -9,11 +9,17 @@ export class BirdFamilyService {
   }
 
   async findById(id: number) {
-    return await this.birdFamilyRepository.findOne({ where: { id }, relations: { birds: {} } });
+    return await this.birdFamilyRepository.findOne({
+      where: { id },
+      relations: { birds: { status: true, order: true, family: true } },
+    });
   }
 
   async findByName(familyName: string) {
-    return await this.birdFamilyRepository.findOne({ where: { familyName } });
+    return await this.birdFamilyRepository.findOne({
+      where: { familyName },
+      relations: { birds: { status: true, order: true, family: true } },
+    });
   }
 
   async create(data: BirdFamily) {
