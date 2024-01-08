@@ -1,16 +1,9 @@
-import { IsString } from 'class-validator';
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Bird } from './bird';
+import { IsString } from "class-validator";
+import { Column, Entity, Index, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Bird } from "./bird";
 
-@Index('unique_family_name', ['familyName'], { unique: true })
-@Entity('bird_family')
+@Index("unique_family_name", ["familyName"], { unique: true })
+@Entity("bird_family")
 export class BirdFamily {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,5 +18,5 @@ export class BirdFamily {
 
   @OneToMany(() => Bird, (bird) => bird.family)
   @JoinColumn()
-  bird: Bird[];
+  birds: Bird[];
 }

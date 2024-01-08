@@ -1,16 +1,9 @@
-import { IsString } from 'class-validator';
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Bird } from './bird';
+import { IsString } from "class-validator";
+import { Column, Entity, Index, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Bird } from "./bird";
 
-@Index('unique_order_name', ['orderName'], { unique: true })
-@Entity('bird_order')
+@Index("unique_order_name", ["orderName"], { unique: true })
+@Entity("bird_order")
 export class BirdOrder {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,5 +18,5 @@ export class BirdOrder {
 
   @OneToMany(() => Bird, (bird) => bird.order)
   @JoinColumn()
-  bird: Bird[];
+  birds: Bird[];
 }

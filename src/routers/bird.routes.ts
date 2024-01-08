@@ -1,24 +1,25 @@
-import { BirdController } from '../controller/bird.controller';
-import { verifyAdmin } from '../shared/middlewares/auth.middleware';
-import { RouteType } from '../types/route.type';
+import { BirdController } from "../controller/bird.controller";
+import { verifyAdmin } from "../shared/middlewares/auth.middleware";
+import { RouteType } from "../types/route.type";
 
 export const BirdRoute: RouteType[] = [
   {
-    method: 'get',
-    route: '/birds',
+    method: "get",
+    route: "/birds",
     controller: BirdController,
-    action: 'getAll',
+    action: "getAll",
   },
   {
-    method: 'get',
-    route: '/birds/:id',
+    method: "get",
+    route: "/birds/:id",
     controller: BirdController,
-    action: 'findOne',
+    action: "findOne",
   },
   {
-    method: 'get',
-    route: '/birds/update/data',
+    method: "get",
+    route: "/birds/update/data",
     controller: BirdController,
-    action: 'fillData',
+    action: "fillData",
+    middleware: [verifyAdmin],
   },
 ];

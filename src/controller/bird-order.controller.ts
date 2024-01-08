@@ -1,18 +1,19 @@
-import * as readline from 'readline';
-import * as fs from 'fs';
-import { BirdOrderService } from '../services/bird-order.service';
-import { BirdOrder } from '../entity/bird-order';
+import * as readline from "readline";
+import * as fs from "fs";
+import { BirdOrderService } from "../services/bird-order.service";
+import { BirdOrder } from "../entity/bird-order";
+import { removeSpecialCharacters } from "../shared/utils/string";
 export class BirdOrderController {
   private birdOrderService = new BirdOrderService();
 
   async fillData() {
     const rl = readline.createInterface({
-      input: fs.createReadStream(__dirname + '/temp/bird_order.csv', 'utf-8'),
+      input: fs.createReadStream(__dirname + "/temp/bird_order.csv", "utf-8"),
       crlfDelay: Infinity,
     });
 
     for await (const line of rl) {
-      const [orderName, orderVietnameseName] = line.split('-');
+      const [orderName, orderVietnameseName] = line.split("-");
       await this.updateData(orderName, orderVietnameseName);
     }
   }
@@ -24,11 +25,10 @@ export class BirdOrderController {
 
       if (!existingOrder) {
         const birdOrder = new BirdOrder();
-        birdOrder.orderName = orderName.slice(1, orderName.trim().length);
-        birdOrder.orderVietnameseName = orderVietnameseName.slice(
-          0,
-          orderVietnameseName.trim().length
-        );
+        birdOrder.orderName = removeSpecialCharacters(orderName);
+        birdOrder.orderVietnameseName = orderVietnameseName
+          ? removeSpecialCharacters(orderVietnameseName)
+          : `Bộ ${removeSpecialCharacters(orderName)}`;
 
         await this.birdOrderService.create(birdOrder);
         console.log(`Inserted: ${orderName} - ${orderVietnameseName}`);
@@ -36,7 +36,7 @@ export class BirdOrderController {
         console.log(`Skipped duplicate entry: ${orderName}`);
       }
     } catch (error) {
-      console.error('Error inserting data:', error.message);
+      console.error("Error inserting data:", error.message);
     }
   }
 }

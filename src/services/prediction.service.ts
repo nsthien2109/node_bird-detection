@@ -49,6 +49,11 @@ export class PredictionService {
         for (const predictElement of predict) {
           const bird = await this.birdRepository.findOne({
             where: { id: predictElement.predicted_id },
+            relations: {
+              status: {},
+              order: {},
+              family: {},
+            },
           });
 
           const birdUrls = await cloudinary.v2.api.resources({

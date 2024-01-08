@@ -1,5 +1,5 @@
-import { AppDataSource } from '../data-source';
-import { Bird } from '../entity';
+import { AppDataSource } from "../data-source";
+import { Bird } from "../entity";
 
 export class BirdService {
   constructor(private birdRepository = AppDataSource.getRepository(Bird)) {}
@@ -8,11 +8,23 @@ export class BirdService {
     return await this.birdRepository.findAndCount({
       skip: (page - 1) * pageSize,
       take: pageSize,
+      relations: {
+        status: {},
+        order: {},
+        family: {},
+      },
     });
   }
 
   async findById(id: number) {
-    return await this.birdRepository.findOne({ where: { id } });
+    return await this.birdRepository.findOne({
+      where: { id },
+      relations: {
+        status: {},
+        order: {},
+        family: {},
+      },
+    });
   }
 
   async count() {
@@ -20,9 +32,9 @@ export class BirdService {
   }
 
   async findByKeyword(page: number, pageSize: number, keyword: string) {
-    const queryBuilder = this.birdRepository.createQueryBuilder('birds');
+    const queryBuilder = this.birdRepository.createQueryBuilder("birds");
     queryBuilder.where(
-      'bird.common_name LIKE :keyword OR bird.vietnamese_name LIKE :keyword OR bird.scientific_name LIKE :keyword',
+      "bird.common_name LIKE :keyword OR bird.vietnamese_name LIKE :keyword OR bird.scientific_name LIKE :keyword",
       {
         keyword: `%${keyword}%`,
       }
