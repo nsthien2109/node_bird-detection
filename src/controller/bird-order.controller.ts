@@ -11,7 +11,7 @@ export class BirdOrderController {
   async getAll(request: Request, response: Response) {
     try {
       const result = await this.birdOrderService.findAll();
-      return response.status(200).json({ result });
+      return response.status(200).json(result);
     } catch (error) {
       return response.status(500).json({ error });
     }

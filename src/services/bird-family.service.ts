@@ -15,6 +15,10 @@ export class BirdFamilyService {
     });
   }
 
+  async count() {
+    return await this.birdFamilyRepository.count({});
+  }
+
   async findByName(familyName: string) {
     return await this.birdFamilyRepository.findOne({
       where: { familyName },

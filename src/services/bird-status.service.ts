@@ -15,6 +15,10 @@ export class BirdStatusService {
     });
   }
 
+  async count() {
+    return await this.birdStatusRepository.count({});
+  }
+
   async findByName(statusName: string) {
     return await this.birdStatusRepository.findOne({
       where: { statusName },

@@ -15,6 +15,10 @@ export class BirdOrderService {
     });
   }
 
+  async count() {
+    return await this.birdOrderRepository.count({});
+  }
+
   async findByName(orderName: string) {
     return await this.birdOrderRepository.findOne({
       where: { orderName },
