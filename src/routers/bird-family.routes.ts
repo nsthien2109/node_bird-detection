@@ -17,7 +17,7 @@ export const BirdFamilyRoute: RouteType[] = [
   },
   {
     method: "get",
-    route: "/family/fill",
+    route: "/family-data/fill",
     controller: BirdFamilyController,
     action: "fillData",
     middleware: [verifyAdmin],

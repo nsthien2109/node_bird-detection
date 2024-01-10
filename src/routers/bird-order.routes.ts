@@ -20,6 +20,6 @@ export const BirdOrderRoute: RouteType[] = [
     route: "/orders/fill",
     controller: BirdOrderController,
     action: "fillData",
-    middleware: [verifyAdmin],
+    // middleware: [verifyAdmin],
   },
 ];

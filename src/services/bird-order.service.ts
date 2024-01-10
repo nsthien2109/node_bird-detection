@@ -2,7 +2,9 @@ import { AppDataSource } from "../data-source";
 import { BirdOrder } from "../entity/bird-order";
 
 export class BirdOrderService {
-  constructor(private birdOrderRepository = AppDataSource.getRepository(BirdOrder)) {}
+  constructor(
+    private birdOrderRepository = AppDataSource.getRepository(BirdOrder)
+  ) {}
 
   async findAll() {
     return await this.birdOrderRepository.find();
