@@ -3,6 +3,9 @@ import { DataSource } from "typeorm";
 import { User } from "./entity/user";
 import { Role } from "./entity/role";
 import { Bird, History, Prediction } from "./entity";
+import { BirdStatus } from "./entity/bird-status";
+import { BirdOrder } from "./entity/bird-order";
+import { BirdFamily } from "./entity/bird-family";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -12,10 +15,19 @@ export const AppDataSource = new DataSource({
   username: "root",
   password: "Bame12345@",
   database: "njha_bird_db",
-  // database: "njha-api",
+  // database: "bird_detection_db",
   synchronize: true,
   logging: false,
-  entities: [User, Role, History, Prediction, Bird],
+  entities: [
+    User,
+    Role,
+    History,
+    Prediction,
+    Bird,
+    BirdStatus,
+    BirdOrder,
+    BirdFamily,
+  ],
   migrations: [],
   subscribers: [],
 });

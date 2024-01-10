@@ -15,4 +15,11 @@ export const BirdRoute: RouteType[] = [
     controller: BirdController,
     action: "findOne",
   },
+  {
+    method: "get",
+    route: "/birds/update/data",
+    controller: BirdController,
+    action: "fillData",
+    middleware: [verifyAdmin],
+  },
 ];

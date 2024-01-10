@@ -8,11 +8,23 @@ export class BirdService {
     return await this.birdRepository.findAndCount({
       skip: (page - 1) * pageSize,
       take: pageSize,
+      relations: {
+        status: {},
+        order: {},
+        family: {},
+      },
     });
   }
 
   async findById(id: number) {
-    return await this.birdRepository.findOne({ where: { id } });
+    return await this.birdRepository.findOne({
+      where: { id },
+      relations: {
+        status: {},
+        order: {},
+        family: {},
+      },
+    });
   }
 
   async count() {
@@ -36,5 +48,9 @@ export class BirdService {
     const bird = await this.findById(id);
     bird.class_name = className;
     await this.birdRepository.update(id, bird);
+  }
+
+  async save(data: any) {
+    await this.birdRepository.save(data);
   }
 }
